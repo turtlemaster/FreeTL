@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="layout.default" template="/WEB-INF/jsp/layouts/default.jsp">
+        <put-attribute name="menu"     value="/WEB-INF/jsp/common/menu.jsp"/>
+        <put-attribute name="extraCss" value="" />
+        <put-attribute name="extraJs" value="" />
+        <put-attribute name="sidebar"  value="/WEB-INF/jsp/common/sidebar.jsp"/>
+        <put-attribute name="header"   value="/WEB-INF/jsp/common/header.jsp" />
+        <put-attribute name="footer"   value="/WEB-INF/jsp/common/footer.jsp" />
+    </definition>
+
+</tiles-definitions>

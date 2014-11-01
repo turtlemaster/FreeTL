@@ -1,0 +1,29 @@
+@import url("sidebar.css");
+@import url("navigation.css");
+@import url("transform/list.css");
+@import url("transform/view.css");
+
+h1.page-title {
+    font-size: 2em;
+    border-bottom: 1px solid black;
+}
+
+
+div.sidebar {
+    padding-top: 20px;
+    width: 20%;
+    float: left;
+
+}
+
+div.content {
+    padding-top: 20px;
+    width: 79%;
+    float: left;
+}
+
+div.footer {
+    clear: both;
+}
+
+

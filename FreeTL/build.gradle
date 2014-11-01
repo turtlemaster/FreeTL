@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+
+version = '1.0'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Spring
+    compile 'org.springframework:spring-core:4.1.1.RELEASE'
+    compile 'org.springframework:spring-web:4.1.1.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.1.1.RELEASE'
+
+    // Tiles
+    compile 'org.apache.tiles:tiles-extras:3.0.4'
+
+    // Web
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'jstl:jstl:1.2'
+
+
+    // Misc
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+
+    //CSV reader/writer
+    compile 'au.com.bytecode:opencsv:2.4'
+
+    // Derby
+    compile 'org.apache.derby:derby:10.11.1.1'
+
+    // JPA
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.0-M3'
+
+
+    // JUnit
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+war {
+    baseName = 'FreeTL'
+    version = '0.1.0'
+}
+
+task tomcat(type:Exec) {
+    workingDir '/Users/turtlemaster/programming/apache-tomcat-7.0.55'
+    executable '/Users/turtlemaster/programming/apache-tomcat-7.0.55/start.sh'
+}
+
+task copyjsp(type:Exec) {
+    workingDir '/Users/turtlemaster/programming/apache-tomcat-7.0.55'
+    executable '/Users/turtlemaster/programming/apache-tomcat-7.0.55/copyjsp.sh'
+}
+
+

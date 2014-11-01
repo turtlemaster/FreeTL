@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: javassist-3.7.ga">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/jboss/javassist/3.7.ga/javassist-3.7.ga.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

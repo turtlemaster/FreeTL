@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: freemarker-2.3.15">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.15/freemarker-2.3.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

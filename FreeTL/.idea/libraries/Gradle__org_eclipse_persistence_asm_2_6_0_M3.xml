@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.eclipse.persistence.asm-2.6.0-M3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.persistence/org.eclipse.persistence.asm/2.6.0-M3/355b4fa08c34367c5f9ae9e02630a7c7e8822400/org.eclipse.persistence.asm-2.6.0-M3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.persistence/org.eclipse.persistence.asm/2.6.0-M3/82f6c907b18235b6f12f60ec68c6823d70d732cc/org.eclipse.persistence.asm-2.6.0-M3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
