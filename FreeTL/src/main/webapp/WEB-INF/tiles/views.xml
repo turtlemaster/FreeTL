@@ -5,6 +5,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/index.jsp"/>
     </definition>
 
+
+    <!-- Transform -->
     <definition extends="layout.default" name="page.transform.list">
         <put-attribute name="body" value="/WEB-INF/jsp/transform/list.jsp"/>
     </definition>
@@ -15,9 +17,35 @@
         <put-attribute name="extraJs" value="/public/scripts/pages/transform/view.js" />
     </definition>
 
+    <definition extends="layout.default" name="page.transform.new">
+        <put-attribute name="body" value="/WEB-INF/jsp/transform/new.jsp"/>
+
+    </definition>
+
+    <definition extends="layout.default" name="page.transform.edit">
+        <put-attribute name="body" value="/WEB-INF/jsp/transform/edit.jsp"/>
+    </definition>
+
+    <definition extends="layout.default" name="page.transform.edit.confirm">
+        <put-attribute name="body" value="/WEB-INF/jsp/transform/confirm.jsp"/>
+    </definition>
+
+
+
+
+
+
+
+    <!-- Operations -->
+
     <definition extends="layout.default" name="page.step.CSVInput">
         <put-attribute name="body" value="/WEB-INF/jsp/step/CSVInput.jsp"/>
-        <put-attribute name="extraJs" value="/public/scripts/pages/step/CSVInput.js" />
+        <put-attribute name="extraJs" value="/public/scripts/pages/step/CSVInput.jsp" />
+    </definition>
+
+    <definition extends="layout.default" name="page.step.edit">
+        <put-attribute name="body" value="/WEB-INF/jsp/step/edit.jsp"/>
+
     </definition>
 
     <definition extends="layout.default" name="page.step.confirmEdit">

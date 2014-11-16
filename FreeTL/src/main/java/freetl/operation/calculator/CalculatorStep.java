@@ -6,13 +6,14 @@ import freetl.util.Record;
 import freetl.exceptions.StepException;
 import freetl.operation.AbstractStep;
 import freetl.util.Calculator;
+import freetl.vo.step.StepVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalculatorStep extends AbstractStep<CalculatorStep.Parameters> {
+public class CalculatorStep extends AbstractStep<StepVO, CalculatorStep.Parameters> {
     private static final Map<OperationType, BinaryOperationFunction> OPERATIONS;
 
     static {
@@ -36,7 +37,7 @@ public class CalculatorStep extends AbstractStep<CalculatorStep.Parameters> {
         List<Integer> colIndex = new ArrayList<Integer>();
         for (String fieldName : parameters.colsToPerformOperationOn) {
             for (int i = 0; i < data.getFieldInfos().size(); i++) {
-                if (data.getFieldInfos().get(i).getFieldname().equals(fieldName)) {
+                if (data.getFieldInfos().get(i).getName().equals(fieldName)) {
                     colIndex.add(i);
                 }
             }
@@ -44,7 +45,7 @@ public class CalculatorStep extends AbstractStep<CalculatorStep.Parameters> {
 
         Integer resultIndex = null;
         for (int i = 0; i < data.getFieldInfos().size(); i++) {
-            if (data.getFieldInfos().get(i).getFieldname().equals(destination)) {
+            if (data.getFieldInfos().get(i).getName().equals(destination)) {
                 resultIndex = i;
                 break;
             }

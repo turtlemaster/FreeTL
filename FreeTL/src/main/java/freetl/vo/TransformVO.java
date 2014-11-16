@@ -42,8 +42,7 @@ public class TransformVO {
         this.name = name;
     }
 
-    public List<StepVO> getStepCollection() { return stepCollection;
-    }
+    public List<StepVO> getStepCollection() { return stepCollection;}
 
     public void setStepCollection(List<StepVO> stepCollection) {
         this.stepCollection = stepCollection;
@@ -61,5 +60,27 @@ public class TransformVO {
         stepCollection.remove(stepVO);
     }
 
+    public StepVO getStepVO(int stepId) {
+        for (StepVO step : stepCollection) {
+            if (step.getId() == stepId) {
+                return step;
+            }
+        }
 
+       return null;
+    }
+
+    public void replaceStep(StepVO stepVO, int stepId) {
+        int index = -1;
+
+        for (int i = 0; i < stepCollection.size(); i++) {
+            if(stepCollection.get(i).getId() == stepId) {
+                index = i;
+                break;
+            }
+        }
+
+        stepCollection.set(index, stepVO);
+
+    }
 }

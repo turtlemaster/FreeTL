@@ -1,35 +1,30 @@
 package freetl.testhelpers;
 
 import freetl.util.FieldInfo;
+import freetl.vo.FieldInfoVO;
+import freetl.vo.type.DataType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FieldInfoListTestHelper {
 
-    public static List<FieldInfo> employeeFieldInfoList() {
-        List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
-        fieldInfos.add(new FieldInfo("First Name", String.class, false, null));
-        fieldInfos.add(new FieldInfo("Wage", Integer.class, false, null));
-        fieldInfos.add(new FieldInfo("Raise", Integer.class, false, null));
-        fieldInfos.add(new FieldInfo("New Wage", Integer.class, false, null));
 
-        fieldInfos.add(new FieldInfo("Hours", Double.class, false, null));
-        fieldInfos.add(new FieldInfo("Days", Double.class, false, null));
-        fieldInfos.add(new FieldInfo("Total Hours", Double.class, false, null));
+
+    public static  List<FieldInfoVO>  employeeFieldInfoList() {
+
+        List<FieldInfoVO> fieldInfoVOs = new ArrayList<FieldInfoVO>();
+        fieldInfoVOs.add(new FieldInfoVO("First Name", DataType.STRING, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Wage", DataType.INTEGER, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Raise", DataType.INTEGER, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("New Wage", DataType.INTEGER, false, null));
+
+        fieldInfoVOs.add(new FieldInfoVO("Hours", DataType.DOUBLE, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Days", DataType.DOUBLE, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Total Hours", DataType.DOUBLE, false, null));
         //fieldTypes.add(new FieldType("Product", Double.class, false, null));
 
-         return fieldInfos;
-
-    }
-
-    public static List<FieldInfo> threeItemFieldTypeList() {
-
-        List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
-        fieldInfos.add(new FieldInfo("First Name", String.class, false, null));
-        fieldInfos.add(new FieldInfo("Wage", Integer.class, false, null));
-        fieldInfos.add(new FieldInfo("Raise", Integer.class, false, null));
-        return fieldInfos;
+        return fieldInfoVOs;
 
     }
 }

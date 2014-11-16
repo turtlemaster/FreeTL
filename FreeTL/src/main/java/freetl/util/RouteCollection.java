@@ -20,11 +20,11 @@ public class RouteCollection {
         }
     }
 
-    public List<Route> getRoutesWithSource(UUID source) {
+    public List<Route> getRoutesWithSource(Integer source) {
         List<Route> result = new ArrayList<Route>();
 
         for (Route r : routes) {
-            if (r.getSource().equals(source)) {
+            if (r.getSource() == source) {
                 result.add(r);
             }
         }

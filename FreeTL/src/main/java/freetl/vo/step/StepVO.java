@@ -3,6 +3,7 @@ package freetl.vo.step;
 import freetl.util.FieldInfo;
 import freetl.vo.FieldInfoVO;
 import freetl.vo.TransformVO;
+import freetl.vo.type.DataType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,7 +30,17 @@ public abstract class StepVO {
     List<FieldInfoVO> fieldInfoList;
 
     protected StepVO() {
-        fieldInfoList = new ArrayList<FieldInfoVO>();
+        //FIX LATER
+        List<FieldInfoVO> fieldInfoVOs = new ArrayList<FieldInfoVO>();
+        fieldInfoVOs.add(new FieldInfoVO("First Name", DataType.STRING, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Colour", DataType.STRING, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Candy", DataType.STRING, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Houses", DataType.INTEGER, false, null));
+        fieldInfoVOs.add(new FieldInfoVO("Date", DataType.DATE, true, "MMM dd, yyyy"));
+        fieldInfoVOs.add(new FieldInfoVO("Number", DataType.NUMBER, true, "#.##"));
+        fieldInfoList = fieldInfoVOs;
+
+      //  fieldInfoList = new ArrayList<FieldInfoVO>();
     }
 
     public int getId() {
@@ -48,6 +59,10 @@ public abstract class StepVO {
         this.name = name;
     }
 
+    public String getStepType() {
+        return getClass().getSimpleName();
+    }
+
     public TransformVO getTransform() {
         return transform;
     }
@@ -64,7 +79,11 @@ public abstract class StepVO {
     public void removeFieldInfoVO(FieldInfoVO fieldInfo) { fieldInfoList.remove(fieldInfo); }
 
     public List<FieldInfoVO> getFieldInfoList() {
-        return fieldInfoList;
+        // return fieldInfoList;
+        List<FieldInfoVO> list = new ArrayList<FieldInfoVO>();
+        list.add(new FieldInfoVO());
+        return list;
+
     }
 
     public void setFieldInfoList(List<FieldInfoVO> fieldInfoList) {

@@ -1,14 +1,12 @@
 package freetl.vo;
 
 import freetl.util.PersistenceManager;
-import freetl.vo.step.CSVInputStepVO;
+import freetl.vo.step.operation.input.CSVInputStepVO;
 import freetl.vo.type.DataType;
 import org.junit.Test;
-import org.relaxng.datatype.Datatype;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.Date;
 import java.util.List;
 
 public class TransformVOTest {
@@ -30,11 +28,6 @@ public class TransformVOTest {
         fieldInfoVO1.setType(DataType.DATE);
 
         stepVO1.addFieldInfoVO(fieldInfoVO1);
-
-
-
-
-
 
 
         EntityManager em = PersistenceManager.getEntityManager();

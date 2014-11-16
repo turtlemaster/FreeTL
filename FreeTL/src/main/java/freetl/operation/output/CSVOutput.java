@@ -8,6 +8,7 @@ import freetl.util.FieldInfo;
 import freetl.util.Record;
 import freetl.exceptions.StepException;
 import freetl.operation.AbstractStep;
+import freetl.vo.step.StepVO;
 
 import java.io.FileWriter;
 import java.text.DecimalFormat;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CSVOutput extends AbstractStep<CSVOutput.Parameters> {
+public class CSVOutput extends AbstractStep<StepVO, CSVOutput.Parameters> {
 
 
     public CSVOutput() { }

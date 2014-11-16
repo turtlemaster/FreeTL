@@ -7,11 +7,12 @@ import freetl.util.DataCollection;
 import freetl.util.FieldInfo;
 import freetl.util.Record;
 import freetl.exceptions.StepException;
+import freetl.vo.step.StepVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstantValueInput extends AbstractInput<ConstantValueInput.Parameters> {
+public class ConstantValueInput extends AbstractInput<StepVO, ConstantValueInput.Parameters> {
 
 
     public ConstantValueInput() {
@@ -19,8 +20,8 @@ public class ConstantValueInput extends AbstractInput<ConstantValueInput.Paramet
 
     @Override
     public DataCollection run(DataCollection data) throws StepException {
-
-        try {
+       //FIX LATER
+       /* try {
 
             DataCollection dataCollection = new DataCollection();
             dataCollection.setFieldInfos(parameters.fieldInfo);
@@ -40,7 +41,9 @@ public class ConstantValueInput extends AbstractInput<ConstantValueInput.Paramet
             return dataCollection;
         } catch (Exception e) {
             throw new StepException(e);
-        }
+        }*/
+
+        return null;
     }
 
 

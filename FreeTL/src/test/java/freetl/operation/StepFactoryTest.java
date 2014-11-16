@@ -1,10 +1,11 @@
 package freetl.operation;
 
-import freetl.testhelpers.StepTestHelper;
+
+import freetl.vo.step.operation.input.CSVInputStepVO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import freetl.operation.input.CSVInput;
+import freetl.runner.operation.input.CSVInput;
 
 public class StepFactoryTest {
 
@@ -16,23 +17,11 @@ public class StepFactoryTest {
     }
 
     @Test
-    public void getInstanceShouldReturnAStepFactory() {
-        Assert.assertNotNull(StepFactory.getInstance());
+    public void getStepWithCSVInputStepVOShouldReturnCSVInputStep() {
+        CSVInputStepVO stepVO = new CSVInputStepVO("test/java/resources/simple.csv", false, null);
+        Assert.assertEquals(CSVInput.class, stepFactory.getStep(stepVO).getClass());
     }
 
-    @Test
-    public void getStepWithNullParametersShouldReturnNull() {
-        Assert.assertNull(stepFactory.getStep(null));
-    }
 
-    @Test
-    public void getStepWithParameterShouldReturnStepForThatParameter() {
-        Assert.assertEquals(StepTestHelper.class, stepFactory.getStep(new StepTestHelper.Parameters()).getClass());
-    }
-
-    @Test
-    public void getStepWithParameterShouldReturnStepForThatParameter2() {
-        Assert.assertEquals(CSVInput.class, stepFactory.getStep(new CSVInput.Parameters()).getClass());
-    }
 
 }

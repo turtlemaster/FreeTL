@@ -5,6 +5,7 @@ import freetl.exceptions.StepException;
 import freetl.util.RouteCollection;
 import freetl.util.StepCollection;
 import freetl.vo.TransformVO;
+import freetl.vo.step.StepVO;
 
 import java.util.*;
 
@@ -14,8 +15,16 @@ public class Transform {
     StepCollection steps;
     RouteCollection routes;
 
-    public Transform(StepCollection steps, RouteCollection routes) {
-        this.steps = steps;
+    public Transform(TransformVO transformVO, RouteCollection routes) {
+
+        List<StepVO>  stepVOs = transformVO.getStepCollection();
+
+        StepFactory stepFactory = new StepFactory();
+        steps = new StepCollection();
+        for(StepVO stepVO: stepVOs){
+            this.steps.addStep(stepFactory.getStep(stepVO));
+        }
+
         this.routes = routes;
 
     }
@@ -42,7 +51,7 @@ public class Transform {
         DataCollection currentData = currentStep.run(null);
 
         while(currentStep != null){
-            List<Route> currentRoute= routes.getRoutesWithSource(currentStep.getParameters().getId());
+            List<Route> currentRoute= routes.getRoutesWithSource(currentStep.getStepVOId());
 
 
             if (!currentRoute.isEmpty()) {
@@ -56,11 +65,11 @@ public class Transform {
     }
 
     public boolean containsCyclicRoute() {
-        UUID startID = steps.getStartStep().getParameters().getId();
-        return containsCyclicRoute(new HashSet<UUID>(), startID);
+        Integer startID = steps.getStartStep().getStepVOId();
+        return containsCyclicRoute(new HashSet<Integer>(), startID);
     }
 
-    public boolean containsCyclicRoute(Set<UUID> visitedIds, UUID visitingNode) {
+    public boolean containsCyclicRoute(Set<Integer> visitedIds, Integer visitingNode) {
 
         if(visitedIds.contains(visitingNode)) {
             return true;
@@ -69,8 +78,9 @@ public class Transform {
         visitedIds.add(visitingNode);
 
         for(Route route: routes.getRoutesWithSource(visitingNode)) {
-            UUID childNode = route.getSource();
-            Set<UUID> copyIds = new HashSet<UUID>(visitedIds);
+            Integer childNode = route.getSource();
+
+            Set<Integer> copyIds = new HashSet<Integer>(visitedIds);
             if(containsCyclicRoute(copyIds, childNode)) {
                 return true;
             }

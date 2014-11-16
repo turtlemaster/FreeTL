@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Oct 31 14:34:38 MDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-0149-67ea-c135-0000047e30b8 
+Fri Nov 14 14:27:39 MST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-0149-b034-5189-0000047e30b8 
 on database directory /Users/turtlemaster/Programming/FreeTL/db/freetl with class loader sun.misc.Launcher$AppClassLoader@7987aeca 
 Loaded from file:/Users/turtlemaster/Programming/db-derby-10.11.1.1-bin/lib/derby.jar
 java.vendor=Apple Inc.

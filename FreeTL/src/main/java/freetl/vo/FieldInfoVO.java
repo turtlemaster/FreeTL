@@ -32,6 +32,15 @@ public class FieldInfoVO {
     @JoinColumn(name = "step_id", insertable = true, updatable = false)
     StepVO step;
 
+    public FieldInfoVO() {
+    }
+
+    public FieldInfoVO(String name, DataType type, Boolean usesFormat, String format) {
+        this.name = name;
+        this.type = type;
+        this.usesFormat = usesFormat;
+        this.format = format;
+    }
 
     public int getId() {
         return id;

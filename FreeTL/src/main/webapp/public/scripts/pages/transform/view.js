@@ -6,7 +6,7 @@ function runTransform(transform){
 
 function setIconPosition(){
     var divs = $(".step");
-    var topOffset = 150;
+    var topOffset = 200;
     var leftOffset = window.innerWidth / 2;
 
 

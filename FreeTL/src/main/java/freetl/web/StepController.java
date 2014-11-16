@@ -1,58 +1,65 @@
 package freetl.web;
 
-import freetl.descriptor.StepParameterDescriptor;
+import freetl.bo.TransformBO;
+import freetl.vo.TransformVO;
+import freetl.vo.step.operation.input.CSVInputStepVO;
+import freetl.vo.step.StepVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import freetl.descriptor.StepDescriptor;
-import freetl.operation.Step;
-import freetl.operation.Transform;
-import freetl.operation.input.CSVInput;
-import freetl.util.StepCollection;
-import freetl.util.TransformRetriever;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 @Controller
-@RequestMapping("/step")
-@SessionAttributes("descriptor")
+@RequestMapping("/transform/{transformId}/step")
+@SessionAttributes({"step","transform"})
 
 public class StepController {
-    @RequestMapping(value = "/confirmEdit", method = RequestMethod.POST)
-    public ModelAndView confirmEdit(@ModelAttribute("descriptor") StepDescriptor descriptor,
-                                    @ModelAttribute("removedIds") String removedIds,
-                                    @ModelAttribute("transformName") String transformName,
-                                    BindingResult bindingResult) throws IOException {
+    @RequestMapping(value = "/{stepId}/confirm", method = RequestMethod.POST)
+    public ModelAndView confirm(@PathVariable(value = "transformId") int transformId,
+                                @PathVariable(value="stepId") int stepId,
+                                @ModelAttribute("step") StepVO step,
+                                BindingResult bindingResult) throws IOException {
 
+        TransformBO transformBO = new TransformBO();
+        TransformVO transform = transformBO.loadTransform(transformId);
 
-        ModelAndView model = new ModelAndView();
-        model.getModel().put("descriptor", descriptor);
-        model.getModel().put("transformName", transformName);
-        model.getModel().put("removedIds", removedIds);
+        ModelAndView mav = new ModelAndView();
+        mav.getModel().put("step", step);
+        mav.getModel().put("transform", transform);
+        mav.setViewName("page.step.confirmEdit");
 
-        model.setViewName("page.step.confirmEdit");
-
-        return model;
+        return mav;
     }
 
-    @RequestMapping(value = "/processEdit", method = RequestMethod.POST)
-    public ModelAndView processEdit(@ModelAttribute("descriptor") StepDescriptor descriptor,
-                                    @ModelAttribute("removedIds") String removedIds,
-                                    @ModelAttribute("transformName") String transformName,
-                                    BindingResult bindingResult) throws IOException {
+        @RequestMapping("/confirm")
+        public ModelAndView newStepConfirm(@PathVariable(value = "transformId") int transformId,
+                                           @PathVariable(value="stepId") int stepId ) throws IOException {
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("redirect:0/confirm");
+            return mav;
+        }
 
 
-        UUID stepId = UUID.fromString(descriptor.getId());
+    @RequestMapping(value = "/{stepId}/commit")
+    public ModelAndView commit(@PathVariable(value = "transformId") int transformId,
+                               @PathVariable(value="stepId") int stepId,
+                               @ModelAttribute("step") StepVO step,
+                               @ModelAttribute("transform") TransformVO transform) throws IOException {
 
-        TransformRetriever retriever = new TransformRetriever();
-        Transform transform = retriever.getTransform(transformName);
 
-        StepCollection stepCollection = transform.getStepCollection();
+        if(stepId == 0){
+            transform.addStepVO(step);
+        }
+
+
+        TransformBO transformBO = new TransformBO();
+        transformBO.saveTransform(transform);
+        ModelAndView mav = new ModelAndView();
+
+
+      /*  StepCollection stepCollection = transform.getStepCollection();
         Step step = stepCollection.getStepWithId(stepId);
 
 
@@ -81,36 +88,46 @@ public class StepController {
         ModelAndView model = new ModelAndView();
 
         model.getModel().put("descriptor", descriptor);
-        model.getModel().put("transformName", transformName);
-        return  model;
-    }
-
-
-    @RequestMapping("/edit")
-    public ModelAndView edit(@RequestParam(value = "filename", required = true) String filename,
-                             @RequestParam(value = "id", required = true) String id) throws IOException {
-
-        TransformRetriever retriever = new TransformRetriever();
-        Transform t = retriever.getTransform(filename);
-
-        UUID stepId = UUID.fromString(id);
-        Step s = t.getStepCollection().getStepWithId(stepId);
-
-        StepDescriptor descriptor = s.getDescriptor();
-
-
-        ModelAndView model = new ModelAndView();
-        model.getModel().put("descriptor", descriptor);
-
-        model.getModel().put("transformName", filename);
-
-
-        model.setViewName("page.step.CSVInput");
-
-        return model;
+        model.getModel().put("transformName", transformName);*/
+        mav.setViewName("redirect:/controller/transform/list");
+        return  mav;
     }
 
 
 
+    @RequestMapping("/{stepId}/edit")
+    public ModelAndView edit(@PathVariable(value = "transformId") int transformId,
+                             @PathVariable(value="stepId") int stepId) throws IOException {
 
+        TransformBO transformBO = new TransformBO();
+        TransformVO transform = transformBO.loadTransform(transformId);
+       //change later
+        StepVO stepVO = new CSVInputStepVO();
+
+        if(stepId > 0){
+
+            stepVO = transform.getStepVO(stepId);
+        }
+
+        ModelAndView mav = new ModelAndView();
+        mav.getModel().put("step", stepVO);
+        mav.getModel().put("transform", transform);
+
+        mav.setViewName("page.step.CSVInput");
+
+        return mav;
+    }
+
+    @RequestMapping("/0/new")
+    public ModelAndView newStepWithId(@PathVariable(value = "transformId") int transformId) throws IOException {
+        return edit(transformId, 0);
+    }
+
+    @RequestMapping("/new")
+    public ModelAndView newStep(@PathVariable(value = "transformId") int transformId) throws IOException {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:0/new");
+        return mav;
+    }
 }
+

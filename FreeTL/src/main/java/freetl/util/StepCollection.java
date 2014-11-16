@@ -1,7 +1,7 @@
 package freetl.util;
 
 import freetl.operation.Step;
-import freetl.operation.util.StartStep;
+import freetl.runner.operation.start.Start;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ public class StepCollection {
         steps.add(step);
     }
 
-    public Step getStepWithId(UUID id) {
+    public Step getStepWithId(int id) {
         for(Step s : steps){
-            if (s.getParameters().getId().equals(id)){
+            if (s.getStepVOId() == id){
                 return s;
             }
         }
@@ -25,7 +25,7 @@ public class StepCollection {
 
     public Step getStartStep(){
         for (Step s : steps) {
-            if (s instanceof StartStep) {
+            if (s instanceof Start) {
                 return s;
             }
         }

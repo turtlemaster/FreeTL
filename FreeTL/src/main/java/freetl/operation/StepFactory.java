@@ -1,5 +1,8 @@
 package freetl.operation;
 
+import freetl.vo.step.StepVO;
+
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,40 +20,42 @@ public class StepFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public Step getStep(Step.Parameters parameters) {
-        if (parameters == null) {
+    public Step getStep(StepVO stepVO) {
+        if (stepVO == null) {
             return null;
         }
 
-        String parameterClassName = parameters.getClass().getName();
-        if (!lookupMap.containsKey(parameterClassName)) {
-            populateLookupMap(parameterClassName);
+        String voClassName = stepVO.getClass().getName();
+        if (!lookupMap.containsKey(voClassName)) {
+            populateLookupMap(voClassName);
         }
 
         try {
-            Step step = lookupMap.get(parameterClassName).newInstance();
-            step.setParameters(parameters);
 
+            Class<? extends Step> stepClass = lookupMap.get(voClassName);
+            Constructor<? extends Step> constructor = stepClass.getConstructor(stepVO.getClass());
+            Step step = constructor.newInstance(stepVO);
             return step;
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Error creating a new %s", lookupMap.get(parameterClassName)), e);
+            throw new RuntimeException(String.format("Error creating a new %s", lookupMap.get(voClassName)), e);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private void populateLookupMap(String parameterClassName) {
-        String className = parameterClassName.substring(0, parameterClassName.indexOf("$"));
+    private void populateLookupMap(String voClassName) {
+        String  stepClassName = voClassName.substring(0, voClassName.length() - 6);
+        stepClassName = stepClassName.replaceAll("freetl.vo.step", "freetl.runner");
         Class clazz;
         try {
-            clazz = Class.forName(className);
+            clazz = Class.forName(stepClassName);
         } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException(String.format("Class %s was not found.", className), e);
+            throw new IllegalArgumentException(String.format("Class %s was not found.", stepClassName), e);
         }
 
         if (!Step.class.isAssignableFrom(clazz)) {
             throw new RuntimeException(String.format("%s is not subclass of %s", clazz, Step.class));
         }
 
-        lookupMap.put(parameterClassName, clazz);
+        lookupMap.put(voClassName, clazz);
     }
 }

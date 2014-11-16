@@ -1,15 +1,17 @@
 package freetl.util;
 
+import freetl.vo.FieldInfoVO;
+
 import java.util.*;
 
 
 public class DataCollection implements Iterable<Record> {
 
-    private List<FieldInfo> fieldInfos;
+    private List<FieldInfoVO> fieldInfos;
     private List<Record> recordList;
 
     public DataCollection() {
-        this.fieldInfos = new LinkedList<FieldInfo>();
+        this.fieldInfos = new LinkedList<FieldInfoVO>();
         this.recordList = new LinkedList<Record>();
     }
 
@@ -27,11 +29,11 @@ public class DataCollection implements Iterable<Record> {
         recordList.add(record);
     }
 
-    public void setFieldInfos(List<FieldInfo> types) {
+    public void setFieldInfos(List<FieldInfoVO> types) {
         fieldInfos.addAll(types);
     }
 
-    public List<FieldInfo> getFieldInfos() {
+    public List<FieldInfoVO> getFieldInfos() {
         return fieldInfos;
     }
 

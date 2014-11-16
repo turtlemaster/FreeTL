@@ -3,21 +3,31 @@ package freetl.operation;
 import freetl.descriptor.StepDescriptor;
 import freetl.util.DataCollection;
 import freetl.exceptions.StepException;
+import freetl.vo.step.StepVO;
 
 
 import java.util.UUID;
 
-public interface Step<T extends Step.Parameters> {
+public interface Step<T extends StepVO, U extends Step.Parameters> {
+
 
     DataCollection run(DataCollection data) throws StepException;
+
+    T getStepVO();
+    int getStepVOId();
+
+
+
 //     UUID getId();
 
-    T getParameters();
-    void setParameters(T parameters);
+    U getParameters();
+    void setParameters(U parameters);
 
     interface Parameters {
         public UUID getId();
     }
+
+
 
     public String getStepLabel();
 

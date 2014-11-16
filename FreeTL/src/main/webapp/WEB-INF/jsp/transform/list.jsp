@@ -2,16 +2,17 @@
 <%@ page isELIgnored="false" %>
 
 
-  <c:forEach var="i" items="${filenames}">
+  <c:forEach var="i" items="${transforms}">
   <p>
 
-    <c:url value="/controller/transform/view" var="my_url">
-        <c:param name="filename" value="${i}" />
+
+    <c:url value="/controller/transform/${i.id}" var="my_url">
     </c:url>
+    <a href="${my_url}">${i.name}</a>
 
-    <a href="${my_url}">${i}</a>
-
-
+    <c:url value="/controller/transform/${i.id}/edit" var="edit_url">
+    </c:url>
+      <a href="${edit_url}">Edit</a>
  </p>
  </c:forEach>
 

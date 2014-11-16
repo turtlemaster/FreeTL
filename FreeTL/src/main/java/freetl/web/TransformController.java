@@ -1,115 +1,132 @@
 package freetl.web;
 
-import freetl.test.User;
-import freetl.util.PersistenceManager;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import freetl.bo.TransformBO;
 import freetl.exceptions.StepException;
-import freetl.io.Transforms;
+import freetl.operation.Route;
 import freetl.operation.Transform;
-import freetl.util.TransformRetriever;
+import freetl.util.RouteCollection;
+import freetl.vo.TransformVO;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/transform")
+@SessionAttributes("transform")
 
 
 public class TransformController {
 
-    @RequestMapping("/view")
-    public ModelAndView viewTransform(@RequestParam(value = "filename", required = true) String filename) throws IOException {
-
-
-        TransformRetriever retriever = new TransformRetriever();
-        Transform t = retriever.getTransform(filename);
-
+    @RequestMapping("/list")
+    public ModelAndView list() {
 
         ModelAndView model = new ModelAndView();
 
+        TransformBO transformBO = new TransformBO();
+        List<TransformVO> transformVOs = transformBO.loadTransforms();
 
-        model.getModel().put("stepDescriptors", retriever.getStepDescriptors(t));
-        model.getModel().put("routes", retriever.getRoutes(t));
-        model.getModel().put("transform", t);
-        model.getModel().put("filename", filename);
-        model.getModel().put("iconIds", retriever.getIds(retriever.getStepDescriptors(t)));
-        model.setViewName("page.transform.view");
+        model.getModel().put("transforms", transformVOs);
+        model.setViewName("page.transform.list");
 
         return model;
     }
 
-    @RequestMapping("/run")
-    public String runTransform(@RequestParam(value = "filename", required = true) String filename, Model model) throws IOException {
-        TransformRetriever retriever = new TransformRetriever();
-        Transform t = retriever.getTransform(filename);
+    @RequestMapping("/{transformId}")
+    public ModelAndView viewTransform(@PathVariable(value = "transformId") int transformId) throws IOException {
+
+
+        TransformBO transformBO = new TransformBO();
+        TransformVO transformVO = transformBO.loadTransform(transformId);
+
+        ModelAndView mva = new ModelAndView();
+        mva.getModel().put("transform", transformVO);
+        mva.setViewName("page.transform.view");
+
+        return mva;
+    }
+
+
+    @RequestMapping("/new")
+    public ModelAndView newTransform() throws IOException {
+
+        ModelAndView mva = new ModelAndView();
+        TransformBO transformBO = new TransformBO();
+        mva.getModel().put("transform", transformBO.newTransformVO());
+        mva.setViewName("page.transform.new");
+        return mva;
+    }
+
+
+
+    @RequestMapping(value = "/{transformId}/edit")
+    public ModelAndView edit(@PathVariable(value = "transformId") int transformId) throws IOException {
+
+       ModelAndView mav = new ModelAndView();
+
+       TransformBO transformBO = new TransformBO();
+       TransformVO transformVO = transformBO.loadTransform(transformId);
+       mav.getModel().put("transform", transformVO);
+       mav.setViewName("page.transform.edit");
+
+        return mav;
+    }
+
+   @RequestMapping(value = "/{transformId}/confirm")
+    public ModelAndView confirm(@ModelAttribute("transform") TransformVO transform,
+                                            BindingResult bindingResult) throws IOException {
+
+
+        ModelAndView mav = new ModelAndView();
+        mav.getModel().put("transform", transform);
+        mav.setViewName("page.transform.edit.confirm");
+
+        return mav;
+
+    }
+
+    @RequestMapping(value = "/{transformId}/commit")
+    public ModelAndView commit(@ModelAttribute("transform") TransformVO transform,
+                                             BindingResult bindingResult) throws IOException {
+
+        TransformBO transformBO = new TransformBO();
+        transformBO.saveTransform(transform);
+
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/controller/transform/list");
+        return mav;
+
+    }
+
+    @RequestMapping("/{transformId}/run")
+    public ModelAndView run(@PathVariable(value = "transformId") int transformId) throws IOException {
+
+
+        ModelAndView mav = new ModelAndView();
+        TransformBO transformBO = new TransformBO();
+        TransformVO transformVO = transformBO.loadTransform(transformId);
+
+        Route route0 = new Route(1,2);
+        RouteCollection routes = new RouteCollection();
+        routes.addRoute(route0);
+
+        Transform transform = new Transform(transformVO, routes);
+
         try {
-            t.run();
+            transform.run();
         } catch (StepException e) {
             e.printStackTrace();
         }
 
 
-        model.addAttribute("contentTemplate", "transform/run");
-        model.addAttribute("contentFragment", "runTransform");
-        return WebUtil.MAIN_LAYOUT;
-    }
-
-    @RequestMapping("/list")
-    public ModelAndView transformList() {
-
-
-        ModelAndView model = new ModelAndView();
-        List<String> filenames = Transforms.getTransformFilenames("/Users/turtlemaster/Programming/FreeTL/src/test/resources");
-        model.getModel().put("filenames", filenames);
-
-        model.setViewName("page.transform.list");
-
-        testJPA();
-
-        return model;
+        mav.setViewName("redirect:/controller/transform/list");
+        return mav;
 
     }
-
-
-
-    public void testJPA() {
-        EntityManager em = PersistenceManager.getEntityManager();
-
-        // Read the existing entries and write to console
-
-        Query q = em.createQuery("SELECT u FROM User u WHERE u.name = :userId");
-        q.setParameter("userId", 701);
-        List<User> userList = q.getResultList();
-        for (User user : userList) {
-            System.out.println(user.getId());
-            System.out.println(user.getName());
-
-        }
-        System.out.println("Size: " + userList.size());
-
-        // Create new user
-        em.getTransaction().begin();
-
-        User user = new User();
-        user.setName("Tom Johnson");
-
-        em.persist(user);
-        em.getTransaction().commit();
-
-        em.close();
-    }
-
-
-
-
-
-
 }
 
 

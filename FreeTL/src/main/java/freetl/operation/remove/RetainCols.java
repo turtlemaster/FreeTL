@@ -6,11 +6,12 @@ import freetl.util.DataCollection;
 import freetl.util.Record;
 import freetl.exceptions.StepException;
 import freetl.operation.AbstractStep;
+import freetl.vo.step.StepVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetainCols extends AbstractStep<RetainCols.Parameters> {
+public class RetainCols extends AbstractStep<StepVO, RetainCols.Parameters> {
 
     public RetainCols() { }
 
@@ -23,7 +24,7 @@ public class RetainCols extends AbstractStep<RetainCols.Parameters> {
 
         for (String fieldName : parameters.retainedCols) {
             for (int i = 0; i < data.getFieldInfos().size(); i++) {
-                if (data.getFieldInfos().get(i).getFieldname().equals(fieldName)) {
+                if (data.getFieldInfos().get(i).getName().equals(fieldName)) {
                     colIndex.add(i);
                 }
             }

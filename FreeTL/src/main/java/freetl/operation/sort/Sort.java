@@ -7,11 +7,12 @@ import freetl.util.DataCollection;
 import freetl.util.FieldInfo;
 import freetl.exceptions.StepException;
 import freetl.operation.AbstractStep;
+import freetl.vo.step.StepVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sort extends AbstractStep<Sort.Parameters>{
+public class Sort extends AbstractStep<StepVO, Sort.Parameters>{
 
 
     public Sort(Parameters parameters) {

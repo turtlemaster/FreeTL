@@ -15,7 +15,7 @@ import static junit.framework.Assert.assertSame;
 
 public class ConstantValueInputTest {
 
-    @Test
+ /*   @Test
     public void runShouldAddFieldTypeToReturnedDataCollection() throws StepException {
         List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
         fieldInfos.add(new FieldInfo("bob", String.class, false, null));
@@ -28,7 +28,7 @@ public class ConstantValueInputTest {
         DataCollection dataCollection = StepFactory.getInstance().getStep(parameters).run(testData);
 
         Assert.assertEquals(fieldInfos, dataCollection.getFieldInfos());
-    }
+    }*/
 
 
 }
